@@ -16,3 +16,5 @@ const connectDB = async () => {
 };
 
 module.exports = connectDB;
+
+python main.py app_id=0eae2f6c-389b-4f15-aa39-81a8208cb067
