@@ -7,7 +7,7 @@ const { Readable } = require('stream');
 const config = {
   imap: {
     user: 'help.safemonitor@gmail.com', // INPUT_REQUIRED {Your IMAP email}
-    password: 'lazn ijdr bmyu tgds', // INPUT_REQUIRED {Your IMAP password}
+    password: process.env.EMAIL_PASSWORD, // INPUT_REQUIRED {Your IMAP password}
     host: 'imap.gmail.com', // INPUT_REQUIRED {Your IMAP host, e.g., imap.gmail.com}
     port: 993, // Default IMAP SSL port
     tls: {
