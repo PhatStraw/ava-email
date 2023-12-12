@@ -6,7 +6,7 @@ const emailUtil = {
     service: 'gmail', // INPUT_REQUIRED {Replace with your email provider}
     auth: {
       user: 'help.safemonitor@gmail.com', // INPUT_REQUIRED {Put your email here}
-      pass: '', // INPUT_REQUIRED {Put your email password here}
+      pass: 'lazn ijdr bmyu tgds', // INPUT_REQUIRED {Put your email password here}
     }
   }),
 
