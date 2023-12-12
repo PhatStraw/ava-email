@@ -26,24 +26,24 @@ async function handleNewCustomerMessage(email, message) {
     });
 
     const contextMessages = conversation.messages.map(m => ({ sender: m.sender, message: m.message }));
+console.log('contextMessages', contextMessages)
+    // try {
+    //     const responseMessage = await openaiUtil.getChatGptResponse(message, contextMessages);
 
-    try {
-        const responseMessage = await openaiUtil.getChatGptResponse(message, contextMessages);
+    //     conversation.messages.push({
+    //         sender: 'autoconverter',
+    //         message: responseMessage,
+    //         timestamp: new Date(),
+    //     });
 
-        conversation.messages.push({
-            sender: 'autoconverter',
-            message: responseMessage,
-            timestamp: new Date(),
-        });
+    //     await conversation.save();
 
-        await conversation.save();
+    //     await emailUtil.sendEmail(conversation.email, 'Reply from AutoConverter', responseMessage, `<p>${responseMessage}</p>`);
 
-        await emailUtil.sendEmail(conversation.email, 'Reply from AutoConverter', responseMessage, `<p>${responseMessage}</p>`);
-
-    } catch (error) {
-        console.error('Failed to get a response from OpenAI', error);
-        await conversation.save();
-    }
+    // } catch (error) {
+    //     console.error('Failed to get a response from OpenAI', error);
+    //     await conversation.save();
+    // }
 }
 
 module.exports = {

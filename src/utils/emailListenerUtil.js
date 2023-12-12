@@ -16,11 +16,12 @@ const config = {
     authTimeout: 3000
   }
 };
-async function onEmailReceived(email) {
-  const { from, subject, text } = email;
-  const senderEmail = from[0];
-  console.log(`Email received from ${senderEmail}: ${subject}`);
-  handleNewCustomerMessage(senderEmail, text);
+async function onEmailReceived(email, text) {
+  if(email){
+    const { from, subject } = email;
+    const senderEmail = from[0];
+    handleNewCustomerMessage(senderEmail, text);
+  }
 }
 
 function setupEmailListener() {
@@ -40,12 +41,17 @@ return imaps.connect(config).then(function (connection) {
           });
         });
 
+        var body = results.map(function (res) {
+          return res.parts[1].body
+        });
+
         Promise.all(_.flatten(messages)).then(function (mails) {
-          mails.forEach(function (mail) {
+          mails.forEach(function (mail, index) {
             if (mail) {
-              // message.parts[1].body.text = mail.text || mail.html;
-              // onEmailReceived(message.parts[1].body);
-              console.log('New mail:', mail);
+              console.log(`Processing email #${index}`);
+              const text = mail.text || mail.html;
+              let firstString = text.split('\n')[0];
+              onEmailReceived(body[index], firstString);
             }
           });
         });
