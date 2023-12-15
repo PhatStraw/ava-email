@@ -4,6 +4,7 @@ const simpleParser = require('mailparser').simpleParser;
 const _ = require('lodash');
 const { handleNewCustomerMessage } = require('../controllers/conversationController');
 const { Readable } = require('stream');
+
 const config = {
   imap: {
     user: 'help.safemonitor@gmail.com', // INPUT_REQUIRED {Your IMAP email}
@@ -16,6 +17,7 @@ const config = {
     authTimeout: 3000
   }
 };
+
 async function onEmailReceived(email, text) {
   if(email){
     const { from, subject } = email;

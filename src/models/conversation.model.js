@@ -28,7 +28,7 @@ const conversationSchema = new mongoose.Schema(
     status: {
       type: String,
       required: true,
-      enum: ['active', 'inactive', 'terminated'],
+      enum: ['active', 'inactive', 'terminated', 'respond'],
       default: 'active'
     }
   },

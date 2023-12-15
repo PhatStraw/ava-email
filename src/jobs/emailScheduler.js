@@ -9,7 +9,7 @@ const emailScheduler = new cron.CronJob('*/1 * * * *', async function() {
   console.log('Cron job started: Checking for conversations to continue');
   
   try {
-    const conversationsToFollowUp = await Conversation.find({ status: 'active' }).exec();
+    const conversationsToFollowUp = await Conversation.find({ status: 'respond' }).exec();
     for (const conversation of conversationsToFollowUp) {
       const lastCustomerMessage = conversation.messages.filter(m => m.sender === 'customer').pop();
       if (!lastCustomerMessage) continue;
@@ -25,6 +25,7 @@ const emailScheduler = new cron.CronJob('*/1 * * * *', async function() {
         if (chatResponse) {
           conversation.messages.push({ sender: 'autoconverter', message: chatResponse, timestamp: new Date() });
           conversation.markModified('messages');
+          conversation.status = 'active';
           await conversation.save();
           await emailUtil.sendEmail(conversation.email, 'Response from autoconverter', chatResponse, `<p>${chatResponse}</p>`);
         }
