@@ -10,15 +10,18 @@ const emailUtil = {
     }
   }),
 
-  async sendEmail(to, subject, text, html) {
+  async sendEmail(messageId="",to, subject, text, html) {
     try {
-      await this.transporter.sendMail({
+      const mailOptions = {
         from: 'help.safemonitor@gmail.com', // Sender address
         to: to, // List of recipients
-        subject: subject, // Subject line
+        subject: `Re: ${subject}`, // Subject line
         text: text, // Plain text body
         html: html, // HTML body content
-      });
+      };
+      
+      
+      await this.transporter.sendMail(mailOptions);
     } catch (error) {
       console.error('Error sending email:', error);
     }

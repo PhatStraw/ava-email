@@ -23,11 +23,12 @@ const emailScheduler = new cron.CronJob('*/1 * * * *', async function() {
       try {
         const chatResponse = await getChatGptResponse(lastCustomerMessage.message, contextMessages);
         if (chatResponse) {
+          const messageId = conversation.messages[conversation.messages.length - 1].messageId;
           conversation.messages.push({ sender: 'autoconverter', message: chatResponse, timestamp: new Date() });
           conversation.markModified('messages');
           conversation.status = 'active';
           await conversation.save();
-          await emailUtil.sendEmail(conversation.email, 'Response from autoconverter', chatResponse, `<p>${chatResponse}</p>`);
+          await emailUtil.sendEmail(messageId, conversation.email, 'Response from autoconverter', chatResponse, `<p>${chatResponse}</p>`);
         }
       } catch (error) {
         console.error('Error during the ChatGPT API call', error);

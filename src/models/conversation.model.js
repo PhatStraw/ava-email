@@ -22,6 +22,10 @@ const conversationSchema = new mongoose.Schema(
           type: Date,
           required: true,
           default: Date.now
+        },
+        messageId: {
+          type: String,
+          required: false
         }
       }
     ],

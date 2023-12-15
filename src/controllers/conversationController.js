@@ -22,7 +22,7 @@ async function handleNewCustomerMessage(email, message) {
     conversation.messages.push({
         sender: 'customer',
         message: message,
-        timestamp: new Date(),
+        timestamp: new Date()
     });
 
     try {

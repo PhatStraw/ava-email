@@ -22,7 +22,7 @@ async function onEmailReceived(email, text) {
   if(email){
     const { from, subject } = email;
     const senderEmail = from[0];
-    handleNewCustomerMessage(senderEmail, text);
+    handleNewCustomerMessage(senderEmail, text); // Pass Message-ID to handleNewCustomerMessage
   }
 }
 
@@ -42,18 +42,19 @@ return imaps.connect(config).then(function (connection) {
             return part.which === 'TEXT' ? simpleParser(part.body) : null;
           });
         });
-
+      
         var body = results.map(function (res) {
           return res.parts[1].body
         });
-
+      
+       
         Promise.all(_.flatten(messages)).then(function (mails) {
           mails.forEach(function (mail, index) {
             if (mail) {
               console.log(`Processing email #${index}`);
               const text = mail.text || mail.html;
               let firstString = text.split('\n')[0];
-              onEmailReceived(body[index], firstString);
+              onEmailReceived(body[index], firstString); // Pass Message-ID to onEmailReceived
             }
           });
         });
