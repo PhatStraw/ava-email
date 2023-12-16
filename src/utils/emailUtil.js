@@ -10,14 +10,14 @@ const emailUtil = {
     }
   }),
 
-  async sendEmail(messageId="",to, subject, text, html) {
+  async sendEmail(to, subject, text, html) {
     try {
       const mailOptions = {
         from: 'help.safemonitor@gmail.com', // Sender address
-        to: to, // List of recipients
-        subject: `Re: ${subject}`, // Subject line
-        text: text, // Plain text body
-        html: html, // HTML body content
+        to: to,
+        subject: `Re: ${subject}`, 
+        text: text, 
+        html: html
       };
       
       
