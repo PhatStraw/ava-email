@@ -27,6 +27,7 @@ const emailScheduler = new cron.CronJob('*/1 * * * *', async function() {
           conversation.messages.push({ sender: 'autoconverter', message: chatResponse, timestamp: new Date() });
           conversation.markModified('messages');
           conversation.status = 'active';
+          conversation.markModified('status');
           await conversation.save();
           await emailUtil.sendEmail(messageId, conversation.email, 'Response from autoconverter', chatResponse, `<p>${chatResponse}</p>`);
         }

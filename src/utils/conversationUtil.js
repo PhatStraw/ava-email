@@ -2,7 +2,7 @@
 
 // Check if a conversation should be terminate based on a customer's message content
 function shouldTerminateConversation(message) {
-  const terminationPhrases = ["not interested", "stop", "unsubscribe"];
+  const terminationPhrases = ["not interested", "stop", "unsubscribe", "im ok", "im good"];
   return terminationPhrases.some(phrase => message.toLowerCase().includes(phrase));
 }
 
