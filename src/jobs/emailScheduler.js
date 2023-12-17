@@ -7,7 +7,6 @@ const { shouldTerminateConversation } = require('../utils/conversationUtil'); //
 
 const emailScheduler = new cron.CronJob('*/1 * * * *', async function() {
   console.log('Cron job started: Checking for conversations to continue');
-  
   try {
     const conversationsToFollowUp = await Conversation.find({ status: 'respond' }).exec();
     for (const conversation of conversationsToFollowUp) {

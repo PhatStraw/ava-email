@@ -15,4 +15,19 @@ router.post('/message/new', async (req, res) => {
   }
 });
 
+router.post('/email/init', async (req, res) => {
+  try {
+    const { emails, message } = req.body;
+    if (!emails || !message) {
+      return res.status(400).send('Emails and message are required.');
+    }
+    for (let email of emails) {
+      await conversationController.sendInitialEmail(email, message);
+    }
+    res.status(200).send('Initial emails sent.');
+  } catch (error) {
+    res.status(500).send('Server error while sending initial emails.');
+  }
+});
+
 module.exports = router;

@@ -38,7 +38,31 @@ async function handleNewCustomerMessage(email, message) {
     }
 }
 
+async function sendInitialEmail(email, message) {
+    let conversation = await Conversation.findOne({ email: email });
+  
+    if (!conversation) {
+      conversation = new Conversation({ email: email });
+    }
+  
+    conversation.messages.push({
+      sender: 'autoconverter',
+      message: message,
+      timestamp: new Date()
+    });
+  
+    try {
+      conversation.status = 'active';
+      await conversation.save();
+      await emailUtil.sendEmail(email, 'Initial Message', message, `<p>${message}</p>`);
+    } catch (error) {
+      console.error('Failed to send initial email', error);
+      await conversation.save();
+    }
+  }
+
 module.exports = {
     handleNewCustomerMessage,
-    updateConversationStatus
+    updateConversationStatus,
+    sendInitialEmail
 };
